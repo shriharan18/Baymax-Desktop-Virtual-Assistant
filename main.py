@@ -1,11 +1,9 @@
 import subprocess
 import wolframalpha
-#import pyttsx3
 import tkinter
 import json
 import random
 import operator
-#import speech_recognition as sr
 import datetime
 import wikipedia
 import webbrowser
@@ -27,14 +25,6 @@ from ecapture import ecapture as ec
 from bs4 import BeautifulSoup
 import win32com.client as wincl
 from urllib.request import urlopen
-
-# engine = pyttsx3.init('sapi5')
-# voices = engine.getProperty('voices')
-# engine.setProperty('voice', voices[0].id)
-
-# def speak(audio):
-#     engine.say(audio)
-#     engine.runAndWait()
 
 def speak(text: str):
     speech_config = speechsdk.SpeechConfig(subscription=os.environ.get('SPEECH_KEY'),
@@ -84,28 +74,6 @@ def username():
 
     speak("How can i help you, sir")
 
-# def takeCommand():
-#
-#     r = sr.Recognizer()
-#
-#     with sr.Microphone() as source:
-#
-#         print("Listening...")
-#         r.pause_threshold = 1
-#         audio = r.listen(source)
-#
-#     try:
-#         print("Recognizing...")
-#         query = r.recognize_google(audio, language='en-in')
-#         print(f"User said: {query}\n")
-#
-#     except Exception as e:
-#         print(e)
-#         print("Unable to Recognize your voice")
-#         return "None"
-#
-#     return query
-
 def takeCommand():
     speech_config = speechsdk.SpeechConfig(subscription=os.environ.get('SPEECH_KEY'),
                                            region=os.environ.get('SPEECH_REGION'))
@@ -137,8 +105,8 @@ def sendEmail(to, content):
     server.ehlo()
     server.starttls()
 
-    server.login('shriharan18@gmail.com', '9342772986')
-    server.sendmail('shriharan18@gmail.com', to, content)
+    server.login('your_email', 'your_password')
+    server.sendmail('your_email', to, content)
     server.close()
 
 def main():
@@ -173,7 +141,7 @@ def main():
         elif 'play music' or 'play song' in query:
             speak("Enjoy your music sir")
 
-            music_dir = "C:\\Users\\shrih\\Music"
+            music_dir = "C:\\Users\\username\\Music"
             songs = os.listdir(music_dir)
             print(songs)
             random = os.startfile(os.path.join(music_dir, songs[1]))
@@ -186,11 +154,11 @@ def main():
             codePath = "enter your exe file path"
             os.startfile(codePath)
 
-        elif 'email to nath' in query:
+        elif 'email to a person' in query:
             try:
                 speak("okay, what should i say?")
                 content = takeCommand()
-                to = "rm.jayanthan.2005@gmail.com"
+                to = "receiver's email address"
                 sendEmail(to, content)
                 speak("Email has been sent sir")
 
@@ -240,7 +208,7 @@ def main():
 
         elif 'calculate' in query:
 
-            app_id = "UP7TUQ-QKTERY79U6"
+            app_id = "APP_ID" #wolframaplha app id
             client = wolframalpha.Client(app_id)
             index = query.lower().split().index('calculate')
             query = query.split()[index + 1:]
@@ -263,7 +231,7 @@ def main():
 
         elif "power point presentation" in query:
             speak("Opening power point presentation")
-            power = r"C:\\Users\\shrih\\Desktop\\Baymax\\presentation.pptx"
+            power = r"C:\\Users\\username\\Desktop\\Baymax\\presentation.pptx"
             os.startfile(power)
 
         elif "is love" in query:
@@ -286,7 +254,7 @@ def main():
 
             try:
                 jsonObj = urlopen(
-                    '''https://newsapi.org / v1 / articles?source = the-times-of-india&sortBy = top&apiKey =\\1c55dd6c93db416d937fb37662b6ced7\\''')
+                    '''https://newsapi.org / v1 / articles?source = the-times-of-india&sortBy = top&apiKey =\\newsapi api key\\''')
                 data = json.load(jsonObj)
                 i = 1
 
@@ -369,10 +337,8 @@ def main():
             speak(ainame)
 
         elif "weather" in query:
-
-            # Google Open weather website
-            # to get API of Open weather
-            api_key = "7ebccc7718320de75f5f91ace6a20868"
+            
+            api_key = "api key" #openweathermap api key
             base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
             speak(" City name ")
             print("City name : ")
@@ -397,9 +363,10 @@ def main():
                 speak(" City Not Found ")
 
         elif "send message" in query:
-            # You need to create an account on Twilio to use this service
-            account_sid = 'AC297268a9dea94625835727d51cfc1452'
-            auth_token = '26fa13f2cd76d87c423108abae73213f'
+
+            #create twilio account
+            account_sid = 'account sid'
+            auth_token = 'auth_token'
             client = Client(account_sid, auth_token)
 
             message = client.messages \
@@ -430,9 +397,7 @@ def main():
 
         elif "what is" in query or "who is" in query:
 
-            # Use the same API key
-            # that we have generated earlier
-            client = wolframalpha.Client("UP7TUQ-QKTERY79U6")
+            client = wolframalpha.Client("api key") #wolframalpha api key
             res = client.query(query)
 
             try:

@@ -365,7 +365,7 @@ def main():
         elif "send message" in query:
 
             #create twilio account
-            account_sid = 'account sid'
+            account_sid = 'account_sid'
             auth_token = 'auth_token'
             client = Client(account_sid, auth_token)
 
